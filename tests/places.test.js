@@ -9,18 +9,25 @@ const googleMapsClient = require('@google/maps').createClient({
 const app = express();
 
 // places request to Google Maps Service
-function getGMPromise(query, language = 'en') {
+function googleMapsPlaces(query, language = 'en') {
   return googleMapsClient.places({
     query,
     language,
   })
     .asPromise()
 }
-function places(req, res) {
-  getGMPromise('Soup')
-    .then(results => {
-      res.status(200).send(results.json.results[0].name);
-    })
+function mockgetGMPromise(query) {
+  return new Promise((res) => {
+    const results = { json: { results: [{ name: 'Infinite Soups' }] } }
+    res(results)
+  })
+}
+// mock
+googleMapsPlaces = mockgetGMPromise;
+
+async function places(req, res) {
+  const gmpResults = await googleMapsPlaces('Soup')
+  res.status(200).send(gmpResults.json.results[0].name);
 }
 app.get('/places', places);
 app.get('/abc', function (req, res) {
