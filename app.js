@@ -1,15 +1,8 @@
 const express = require('express')
+const places = require('./places')
 const config = require('./config')
-const mapPlaces = require('./map-places')
-
-const googleMapsClient = require('@google/maps').createClient({
-  key: config.gmkey,
-  Promise: Promise,
-})
 
 const app = express()
-const places = mapPlaces(googleMapsClient)
-
 app.get('/places', places)
 
 app.get('/place', (req, res) => {

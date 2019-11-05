@@ -1,5 +1,6 @@
 const request = require('supertest');
 const express = require('express');
+const places = require('../places')
 
 const app = express();
 
@@ -15,10 +16,6 @@ jest.mock('../googleMapsPlaces')
 const googleMapsPlaces = require('../googleMapsPlaces')
 googleMapsPlaces.mockImplementation(mockgoogleMapsPlaces);
 
-async function places(req, res) {
-  const gmpResults = await googleMapsPlaces('Soup')
-  res.status(200).send(gmpResults.json.results[0].name);
-}
 app.get('/places', places);
 app.get('/abc', function (req, res) {
   res.status(200).json({ name: 'john' });
