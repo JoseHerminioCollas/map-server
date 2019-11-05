@@ -21,8 +21,10 @@ describe('GET /places', function () {
   it('places', function (done) {
     request(app)
       .get('/places?q=dog')
+      .expect('Content-Type', /json/)
+      .expect(200)
       .then(response => {
-        expect(/Soup/.test(response.text)).toBe(true)
+        expect(response.body.length).toBe(1)
         done()
       })
   })
