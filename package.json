@@ -1,0 +1,35 @@
+{
+  "name": "map-server",
+  "description": ".",
+  "version": "0.0.1",
+  "license": "MIT",
+  "author": "Goatstone",
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:JoseHerminioCollas/map-server.git"
+  },
+  "engines": {
+    "node": ">=8.0.0"
+  },
+  "scripts": {
+    "start": "node app.js",
+    "system-test": "repo-tools test app",
+    "test": "npm run system-test",
+    "e2e-test": "repo-tools test deploy"
+  },
+  "dependencies": {
+    "express": "^4.16.3"
+  },
+  "devDependencies": {
+    "@google-cloud/nodejs-repo-tools": "^3.3.0"
+  },
+  "cloud-repo-tools": {
+    "test": {
+      "app": {
+        "msg": "Hello, world!"
+      }
+    },
+    "requiresKeyFile": true,
+    "requiresProjectId": true
+  }
+}
