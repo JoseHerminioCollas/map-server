@@ -7,6 +7,11 @@ const app = express()
 app.get('/places', places(googleMapsPlaces))
 
 app.get('/place', (req, res) => {
+  const googleMapsClient = require('@google/maps').createClient({
+    key: config.gmkey,
+    Promise: Promise,
+  })
+
   googleMapsClient.findPlace({
     input: 'soup',
     inputtype: 'textquery',
@@ -24,14 +29,19 @@ app.get('/place', (req, res) => {
     .asPromise()
     .then(function (response) {
       res
-      .status(200)
-      .send(response.json.candidates)
-      .end()
+        .status(200)
+        .send(response.json.candidates)
+        .end()
     })
     .then(() => 1, () => 2);
-  })
+})
 
 app.get('/', (req, res) => {
+  const googleMapsClient = require('@google/maps').createClient({
+    key: config.gmkey,
+    Promise: Promise,
+  })
+
   googleMapsClient.geocode({
     address: '1600 Amphitheatre Parkway, Mountain View, CA'
   }, function (err, response) {
