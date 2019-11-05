@@ -2,6 +2,11 @@ const express = require('express')
 const places = require('./places')
 const config = require('./config')
 
+const googleMapsClient = require('@google/maps').createClient({
+  key: config.gmkey,
+  Promise: Promise,
+})
+
 const app = express()
 app.get('/places', places)
 
