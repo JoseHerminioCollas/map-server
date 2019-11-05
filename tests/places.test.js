@@ -1,18 +1,19 @@
 const request = require('supertest');
 const express = require('express');
-// const config = require('../config.js')
-let googleMapsPlaces = require('../googleMapsPlaces')
 
 const app = express();
 
-function mockgetGMPromise(query) {
+function mockgoogleMapsPlaces(query) {
   return new Promise((res) => {
     const results = { json: { results: [{ name: 'Infinite Soups' }] } }
     res(results)
   })
 }
+
 // mock
-googleMapsPlaces = mockgetGMPromise;
+jest.mock('../googleMapsPlaces')
+const googleMapsPlaces = require('../googleMapsPlaces')
+googleMapsPlaces.mockImplementation(mockgoogleMapsPlaces);
 
 async function places(req, res) {
   const gmpResults = await googleMapsPlaces('Soup')
