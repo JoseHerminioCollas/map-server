@@ -1,5 +1,6 @@
 const express = require('express')
 const config = require('./config')
+const mapPlaces = require('./map-places')
 
 const googleMapsClient = require('@google/maps').createClient({
   key: config.gmkey,
@@ -7,21 +8,10 @@ const googleMapsClient = require('@google/maps').createClient({
 })
 
 const app = express()
+const places = mapPlaces(googleMapsClient)
 
-app.get('/places', (req, res) => {
-  googleMapsClient.places({
-    query: 'wood store',
-    language: 'en',
-  })
-    .asPromise()
-    .then(function (response) {
-      res
-        .status(200)
-        .send(response.json.results)
-        .end()
-    })
-    .then(() => 1, () => 2);
-})
+app.get('/places', places)
+
 app.get('/place', (req, res) => {
   googleMapsClient.findPlace({
     input: 'soup',
