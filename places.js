@@ -1,8 +1,11 @@
-const googleMapsPlaces = require('./googleMapsPlaces')
+const places = (googleMapsPlaces) => {
 
-async function places(req, res) {
-  const gmpResults = await googleMapsPlaces('Soup')
-  res.status(200).send(gmpResults.json.results[0].name);
+  return (
+    async function placesReturn(req, res) {
+      const gmpResults = await googleMapsPlaces('Soup')
+      res.status(200).send(gmpResults.json.results[0].name);
+    }
+  )
 }
 
 module.exports = places
