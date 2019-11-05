@@ -18,6 +18,7 @@
     "e2e-test": "repo-tools test deploy"
   },
   "dependencies": {
+    "@google/maps": "^1.0.2",
     "express": "^4.16.3"
   },
   "devDependencies": {
