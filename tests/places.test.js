@@ -20,9 +20,9 @@ app.get('/abc', function (req, res) {
 describe('GET /places', function () {
   it('places', function (done) {
     request(app)
-      .get('/places')
+      .get('/places?q=dog')
       .then(response => {
-        expect(response.text).toBe('Infinite Soups')
+        expect(/Soup/.test(response.text)).toBe(true)
         done()
       })
   })

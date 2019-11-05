@@ -8,7 +8,7 @@ const places = (googleMapsPlaces) => {
       else {
         const query = req.query.q
         const gmpResults = await googleMapsPlaces(query)
-        res.status(200).send(gmpResults.json.results[0].name);
+        res.status(200).send(gmpResults.json.results);
       }
     }
   )
