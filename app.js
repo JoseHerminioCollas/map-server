@@ -8,6 +8,20 @@ const googleMapsClient = require('@google/maps').createClient({
 
 const app = express()
 
+app.get('/places', (req, res) => {
+  googleMapsClient.places({
+    query: 'wood store',
+    language: 'en',
+  })
+    .asPromise()
+    .then(function (response) {
+      res
+        .status(200)
+        .send(response.json.results)
+        .end()
+    })
+    .then(() => 1, () => 2);
+})
 app.get('/place', (req, res) => {
   googleMapsClient.findPlace({
     input: 'soup',
@@ -18,7 +32,7 @@ app.get('/place', (req, res) => {
       'geometry/location/lng', 'geometry/viewport', 'geometry/viewport/northeast',
       'geometry/viewport/northeast/lat', 'geometry/viewport/northeast/lng',
       'geometry/viewport/southwest', 'geometry/viewport/southwest/lat',
-      'geometry/viewport/southwest/lng', 'icon', 'id', 
+      'geometry/viewport/southwest/lng', 'icon',
       'permanently_closed', 'photos', 'place_id', 'types',
       'opening_hours', 'price_level', 'rating', 'plus_code'
     ]
@@ -27,9 +41,8 @@ app.get('/place', (req, res) => {
     .then(function (response) {
       res
       .status(200)
-      .send(response)
+      .send(response.json.candidates)
       .end()
-      expect(response.json.candidates.length).toBeGreaterThan(0);
     })
     .then(() => 1, () => 2);
   })
