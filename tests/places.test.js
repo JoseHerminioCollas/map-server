@@ -9,15 +9,15 @@ const googleMapsClient = require('@google/maps').createClient({
 const app = express();
 
 // places request to Google Maps Service
-function getGMPromise() {
+function getGMPromise(query, language = 'en') {
   return googleMapsClient.places({
-    query: 'wood store',
-    language: 'en',
+    query,
+    language,
   })
     .asPromise()
 }
 function places(req, res) {
-  getGMPromise()
+  getGMPromise('Soup')
     .then(results => {
       res.status(200).send(results.json.results[0].name);
     })
@@ -31,10 +31,10 @@ describe('GET /places', function () {
   it('places', function (done) {
     request(app)
       .get('/places')
-      .expect(res => {
-        console.log('res', res.text)
+      .then(response => {
+        expect(response.text).toBe('Infinite Soups')
+        done()
       })
-      .expect(200, done)
   })
   it('abc', function (done) {
     request(app)
