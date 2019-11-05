@@ -1,21 +1,10 @@
 const request = require('supertest');
 const express = require('express');
-const config = require('../config.js')
+// const config = require('../config.js')
+let googleMapsPlaces = require('../googleMapsPlaces')
 
-const googleMapsClient = require('@google/maps').createClient({
-  key: config.gmkey,
-  Promise: Promise,
-})
 const app = express();
 
-// places request to Google Maps Service
-function googleMapsPlaces(query, language = 'en') {
-  return googleMapsClient.places({
-    query,
-    language,
-  })
-    .asPromise()
-}
 function mockgetGMPromise(query) {
   return new Promise((res) => {
     const results = { json: { results: [{ name: 'Infinite Soups' }] } }
