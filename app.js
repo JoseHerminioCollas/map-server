@@ -4,8 +4,12 @@ const config = require('./config')
 const googleMapsPlaces = require('./googleMapsPlaces')
 
 const app = express()
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*")
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept")
+  next()
+})
 app.get('/places', places(googleMapsPlaces))
-
 app.get('/place', (req, res) => {
   const googleMapsClient = require('@google/maps').createClient({
     key: config.gmkey,
