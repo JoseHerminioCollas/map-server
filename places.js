@@ -2,12 +2,21 @@ const places = (googleMapsPlaces) => {
 
   return (
     async function placesReturn(req, res) {
-      if (!req.query || !req.query.q) {
-        res.send('A query needs to be provided')
+      // query latLng radiuss
+      const query = req.query.q
+      const location = req.query.latlng
+      const radius = req.query.radius
+      if (!req.query ||
+        !req.query.q ||
+        !req.query.latlng ||
+        !req.query.radius) {
+        res.send('A user query needs a query, lat : long, and radius to be provided')
       }
       else {
         const userQuery = {
-          query: req.query.q,
+          query,
+          location,
+          radius: Number(radius)
         }
         const gmpResults = await googleMapsPlaces(userQuery)
         res.status(200).json(gmpResults.json.results);
@@ -17,3 +26,4 @@ const places = (googleMapsPlaces) => {
 }
 
 module.exports = places
+// req.query.radiusreq.query.radius

@@ -19,8 +19,9 @@ app.get('/abc', function (req, res) {
 
 describe('GET /places', function () {
   it('places', function (done) {
+    const urlRequest = '?q=dog&latlng=40,-110&radius=50000'
     request(app)
-      .get('/places?q=dog')
+      .get('/places' + urlRequest)
       .expect('Content-Type', /json/)
       .expect(200)
       .then(response => {
