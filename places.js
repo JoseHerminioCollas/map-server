@@ -6,8 +6,10 @@ const places = (googleMapsPlaces) => {
         res.send('A query needs to be provided')
       }
       else {
-        const query = req.query.q
-        const gmpResults = await googleMapsPlaces(query)
+        const userQuery = {
+          query: req.query.q,
+        }
+        const gmpResults = await googleMapsPlaces(userQuery)
         res.status(200).json(gmpResults.json.results);
       }
     }

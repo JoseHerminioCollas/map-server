@@ -5,11 +5,9 @@ const googleMapsClient = require('@google/maps').createClient({
   Promise: Promise,
 })
 
-function googleMapsPlaces(query, language = 'en') {
-  return googleMapsClient.places({
-    query,
-    language,
-  })
+function googleMapsPlaces(userQuery = {}) {
+  if (!userQuery.query) throw 'query must be provided'
+  return googleMapsClient.places(userQuery)
     .asPromise()
 }
 
