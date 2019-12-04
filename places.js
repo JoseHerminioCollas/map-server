@@ -1,29 +1,46 @@
 const places = (googleMapsPlaces) => {
-
+  const errorMessage = 'A user query needs a query, lat : long, and radius to be provided'
   return (
-    async function placesReturn(req, res) {
-      // query latLng radiuss
-      const query = req.query.q
-      const location = req.query.latlng
-      const radius = req.query.radius
-      if (!req.query ||
-        !req.query.q ||
-        !req.query.latlng ||
-        !req.query.radius) {
-        res.send('A user query needs a query, lat : long, and radius to be provided')
+    async function placesReturn(req, res, next) {
+      const googlePlacesQuery = {}
+      const requiredProps = [
+        'query',
+        'location',
+        'radius',
+      ]
+      const validProps = [
+        'query',
+        'language',
+        'location',
+        'radius',
+        'minprice',
+        'maxprice',
+        'opennow',
+        'type',
+        'pagetoken',
+        'region',
+      ]
+      const userQuery = req.query
+      if (!requiredProps.every(e => userQuery.hasOwnProperty(e))) {
+        res.send(errorMessage)
+        return next()
       }
-      else {
-        const userQuery = {
-          query,
-          location,
-          radius: Number(radius)
+      // add valid request query values to places query
+      validProps.forEach(vp => {
+        if (userQuery.hasOwnProperty(vp)) {
+          googlePlacesQuery[vp] = userQuery[vp]
         }
-        const gmpResults = await googleMapsPlaces(userQuery)
-        res.status(200).json(gmpResults.json.results);
-      }
+      })
+      // convert values
+      Object.assign(
+        googlePlacesQuery,
+        { radius: Number(googlePlacesQuery.radius) }
+      )
+      console.log(googlePlacesQuery)
+      const gmpResults = await googleMapsPlaces(googlePlacesQuery)
+      res.status(200).json(gmpResults.json.results[0]);
     }
   )
 }
 
 module.exports = places
-// req.query.radiusreq.query.radius

@@ -1,14 +1,15 @@
 const googleMapsPlaces = require('./googleMapsPlaces')
 
 const sydney = '-33.8,151.1'
-const seattle = '43,-122'
+const seattle = '47.6062,-122.3321'
 
 const getG = async () => {
   const userQuery = {
-    query: 'dogs',
+    query: 'electronics',
     language: 'en',
-    location: sydney,
-    radius: 50000
+    location: seattle,
+    radius: 9000,
+    type: 'electronic_store',
   }
   const response = await googleMapsPlaces(userQuery)
   return response
@@ -16,7 +17,7 @@ const getG = async () => {
 getG().then()
   .then(function (response) {
     console.log(response.query)
-    console.log(response.json.results[0])
+    console.log(response.json.results)
   })
 /*
 query 	Object
