@@ -37,7 +37,7 @@ const places = (googleMapsPlaces) => {
         { radius: Number(googlePlacesQuery.radius) }
       )
       const gmpResults = await googleMapsPlaces(googlePlacesQuery)
-      res.status(200).json(gmpResults.json.results[0]);
+      res.status(200).json(gmpResults.json.results);
     }
   )
 }

@@ -19,13 +19,14 @@ app.get('/abc', function (req, res) {
 
 describe('GET /places', function () {
   it('places', function (done) {
-    const urlRequest = '?q=dog&latlng=40,-110&radius=50000'
+    const urlRequest = '?query=dog&location=47.700,-100.100&radius=50000'
     request(app)
       .get('/places' + urlRequest)
       .expect('Content-Type', /json/)
       .expect(200)
       .then(response => {
-        expect(response.body.length).toBe(1)
+        expect(Array.isArray(response.body)).toBe(true)
+        expect(response.body[0].hasOwnProperty('name')).toBe(true)
         done()
       })
   })
