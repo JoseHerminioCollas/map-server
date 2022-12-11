@@ -19,7 +19,7 @@
   },
   "dependencies": {
     "@google/maps": "^1.0.2",
-    "express": "^4.16.3"
+    "express": "^4.17.3"
   },
   "devDependencies": {
     "@google-cloud/nodejs-repo-tools": "^3.3.0",
